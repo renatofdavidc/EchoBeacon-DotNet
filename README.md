@@ -37,8 +37,8 @@ possibilitando o cadastro, atualização, listagem e exclusão de ambos os recur
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/seu-repositorio.git
-cd seu-repositorio
+git clone https://github.com/renatofdavidc/EchoBeacon-DotNet.git
+cd ProjetoChallengeMottu
 ```
 
 ### 2. Configure o banco de dados
