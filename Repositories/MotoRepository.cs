@@ -19,7 +19,6 @@ namespace ProjetoChallengeMottu.Repositories
 
         public IQueryable<Moto> QueryWithFilters(MotoFilter filter)
         {
-            // Retorna IQueryable<Moto> para permitir Include, paginação etc.
             var query = _context.Motos
                 .Include(m => m.EchoBeacon)
                 .AsQueryable();

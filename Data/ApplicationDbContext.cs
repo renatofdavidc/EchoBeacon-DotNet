@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Oracle.EntityFrameworkCore.Metadata;   // para UseIdentityColumns
+using Oracle.EntityFrameworkCore.Metadata;
 using ProjetoChallengeMottu.Models;
 
 namespace ProjetoChallengeMottu.Data
@@ -11,13 +11,11 @@ namespace ProjetoChallengeMottu.Data
         {
         }
 
-        // Estes dois DbSet são essenciais — sem eles o EF não “vê” suas tabelas:
         public DbSet<Moto> Motos { get; set; }
         public DbSet<EchoBeacon> EchoBeacons { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Habilita Identity no Oracle
             OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             base.OnModelCreating(modelBuilder);
