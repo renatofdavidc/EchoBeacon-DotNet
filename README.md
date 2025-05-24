@@ -38,7 +38,7 @@ possibilitando o cadastro, atualização, listagem e exclusão de ambos os recur
 
 ```bash
 git clone https://github.com/renatofdavidc/EchoBeacon-DotNet.git
-cd ProjetoChallengeMottu
+cd EchoBeacon-DotNet
 ```
 
 ### 2. Configure o banco de dados
