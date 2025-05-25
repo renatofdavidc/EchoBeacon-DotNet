@@ -1,5 +1,11 @@
 # Projeto Challenge Mottu
 
+## Integrantes 👥
+
+- Gustavo Lopes Santos da Silva - RM: 556859  
+- Renato de Freitas David Campiteli - RM: 555627  
+- Gabriel Santos Jablonski - RM: 555452  
+
 ## Finalidade
 
 Este projeto foi desenvolvido como parte de um desafio técnico proposto pela Mottu. O objetivo é construir uma API RESTful para gerenciamento de motos e dispositivos EchoBeacons,
