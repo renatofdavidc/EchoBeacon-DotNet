@@ -47,7 +47,44 @@ namespace ProjetoChallengeMottu.Migrations
                         .IsUnique()
                         .HasFilter("\"MotoId\" IS NOT NULL");
 
+                    b.HasIndex("NumeroIdentificacao")
+                        .IsUnique();
+
                     b.ToTable("ECHOBEACON");
+                });
+
+            modelBuilder.Entity("ProjetoChallengeMottu.Models.Localizacao", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER(19)");
+
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("DataHoraRegistro")
+                        .HasColumnType("TIMESTAMP(7)");
+
+                    b.Property<long?>("EchoBeaconId")
+                        .HasColumnType("NUMBER(19)");
+
+                    b.Property<long>("MotoId")
+                        .HasColumnType("NUMBER(19)");
+
+                    b.Property<string>("Setor")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR2(50)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EchoBeaconId");
+
+                    b.HasIndex("MotoId");
+
+                    b.ToTable("LOCALIZACOES");
                 });
 
             modelBuilder.Entity("ProjetoChallengeMottu.Models.Moto", b =>
@@ -79,6 +116,24 @@ namespace ProjetoChallengeMottu.Migrations
                         .WithOne("EchoBeacon")
                         .HasForeignKey("ProjetoChallengeMottu.Models.EchoBeacon", "MotoId")
                         .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Moto");
+                });
+
+            modelBuilder.Entity("ProjetoChallengeMottu.Models.Localizacao", b =>
+                {
+                    b.HasOne("ProjetoChallengeMottu.Models.EchoBeacon", "EchoBeacon")
+                        .WithMany()
+                        .HasForeignKey("EchoBeaconId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ProjetoChallengeMottu.Models.Moto", "Moto")
+                        .WithMany()
+                        .HasForeignKey("MotoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EchoBeacon");
 
                     b.Navigation("Moto");
                 });

@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ProjetoChallengeMottu</name>
+    </assembly>
+    <members>
+        <member name="M:ProjetoChallengeMottu.Controllers.EchoBeaconsController.GetAll(ProjetoChallengeMottu.Filters.EchoBeaconFilter,System.Int32,System.Int32)">
+            <summary>
+            Lista EchoBeacons com paginação e filtros.
+            </summary>
+        </member>
+        <member name="M:ProjetoChallengeMottu.Controllers.EchoBeaconsController.GetById(System.Int64)">
+            <summary>
+            Obtém uma EchoBeacon pelo Id.
+            </summary>
+        </member>
+        <member name="M:ProjetoChallengeMottu.Controllers.EchoBeaconsController.Create(ProjetoChallengeMottu.DTOs.EchoBeaconRequest)">
+            <summary>
+            Cria uma EchoBeacon.
+            Exemplo de payload:
+            {
+              "numeroIdentificacao": "BEACON-01",
+              "dataRegistro": "2025-09-25T12:00:00Z",
+              "motoId": null
+            }
+            </summary>
+        </member>
+        <member name="M:ProjetoChallengeMottu.Controllers.EchoBeaconsController.Update(System.Int64,ProjetoChallengeMottu.DTOs.EchoBeaconRequest)">
+            <summary>
+            Atualiza uma EchoBeacon.
+            </summary>
+        </member>
+        <member name="M:ProjetoChallengeMottu.Controllers.EchoBeaconsController.Delete(System.Int64)">
+            <summary>
+            Remove uma EchoBeacon.
+            </summary>
+        </member>
+        <member name="M:ProjetoChallengeMottu.Controllers.LocalizacoesController.GetAll(ProjetoChallengeMottu.Filters.LocalizacaoFilter,System.Int32,System.Int32)">
+            <summary>
+            Lista localizações com paginação e filtros.
+            </summary>
+        </member>
+        <member name="M:ProjetoChallengeMottu.Controllers.LocalizacoesController.GetById(System.Int64)">
+            <summary>
+            Obtém uma localização por Id.
+            </summary>
+        </member>
+        <member name="M:ProjetoChallengeMottu.Controllers.LocalizacoesController.Create(ProjetoChallengeMottu.DTOs.LocalizacaoRequest)">
+            <summary>
+            Cria um registro de localização para uma moto.
+            </summary>
+        </member>
+        <member name="M:ProjetoChallengeMottu.Controllers.LocalizacoesController.Update(System.Int64,ProjetoChallengeMottu.DTOs.LocalizacaoRequest)">
+            <summary>
+            Atualiza uma localização.
+            </summary>
+        </member>
+        <member name="M:ProjetoChallengeMottu.Controllers.LocalizacoesController.Delete(System.Int64)">
+            <summary>
+            Remove uma localização.
+            </summary>
+        </member>
+        <member name="M:ProjetoChallengeMottu.Controllers.MotosController.GetAll(ProjetoChallengeMottu.Filters.MotoFilter,System.Int32,System.Int32)">
+            <summary>
+            Lista motos com paginação e filtros.
+            </summary>
+        </member>
+        <member name="M:ProjetoChallengeMottu.Controllers.MotosController.GetById(System.Int64)">
+            <summary>
+            Obtém uma moto pelo Id.
+            </summary>
+        </member>
+        <member name="M:ProjetoChallengeMottu.Controllers.MotosController.Create(ProjetoChallengeMottu.DTOs.MotoRequest)">
+            <summary>
+            Cria uma moto e opcionalmente aloca uma EchoBeacon.
+            Exemplo de payload:
+            {
+              "placa": "ABC1D23",
+              "modelo": "Honda CG 160",
+              "echoBeaconId": 10
+            }
+            </summary>
+        </member>
+        <member name="M:ProjetoChallengeMottu.Controllers.MotosController.Update(System.Int64,ProjetoChallengeMottu.DTOs.MotoRequest)">
+            <summary>
+            Atualiza dados de uma moto e seu vínculo com EchoBeacon.
+            Exemplo de payload:
+            {
+              "placa": "ABC1D23",
+              "modelo": "Yamaha Fazer",
+              "echoBeaconId": 15
+            }
+            </summary>
+        </member>
+        <member name="M:ProjetoChallengeMottu.Controllers.MotosController.Delete(System.Int64)">
+            <summary>
+            Remove uma moto.
+            </summary>
+        </member>
+        <member name="T:ProjetoChallengeMottu.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:ProjetoChallengeMottu.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ProjetoChallengeMottu.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ProjetoChallengeMottu.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ProjetoChallengeMottu.Migrations.AddLocalizacao">
+            <inheritdoc />
+        </member>
+        <member name="M:ProjetoChallengeMottu.Migrations.AddLocalizacao.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ProjetoChallengeMottu.Migrations.AddLocalizacao.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ProjetoChallengeMottu.Migrations.AddLocalizacao.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

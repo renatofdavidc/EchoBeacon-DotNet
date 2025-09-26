@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProjetoChallengeMottu")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6711fa2f54a0b1ec0eecce9d33577cdc30a67fb9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c8b984e5e1333144ab1cf807297b16bf5591fca8")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProjetoChallengeMottu")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProjetoChallengeMottu")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Renato\\Downloads\\ProjetoChallengeMottu\\ProjetoChallengeMottu\\ProjetoChallengeMottu\\ProjetoChallengeMottu.csproj": {}
+    "R:\\dotnet\\challenge\\ProjetoChallengeMottu\\ProjetoChallengeMottu.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Renato\\Downloads\\ProjetoChallengeMottu\\ProjetoChallengeMottu\\ProjetoChallengeMottu\\ProjetoChallengeMottu.csproj": {
+    "R:\\dotnet\\challenge\\ProjetoChallengeMottu\\ProjetoChallengeMottu.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Renato\\Downloads\\ProjetoChallengeMottu\\ProjetoChallengeMottu\\ProjetoChallengeMottu\\ProjetoChallengeMottu.csproj",
+        "projectUniqueName": "R:\\dotnet\\challenge\\ProjetoChallengeMottu\\ProjetoChallengeMottu.csproj",
         "projectName": "ProjetoChallengeMottu",
-        "projectPath": "C:\\Users\\Renato\\Downloads\\ProjetoChallengeMottu\\ProjetoChallengeMottu\\ProjetoChallengeMottu\\ProjetoChallengeMottu.csproj",
+        "projectPath": "R:\\dotnet\\challenge\\ProjetoChallengeMottu\\ProjetoChallengeMottu.csproj",
         "packagesPath": "C:\\Users\\Renato\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Renato\\Downloads\\ProjetoChallengeMottu\\ProjetoChallengeMottu\\ProjetoChallengeMottu\\obj\\",
+        "outputPath": "R:\\dotnet\\challenge\\ProjetoChallengeMottu\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\c\\NuGetPackages"
@@ -74,6 +74,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"
+            },
+            "Swashbuckle.AspNetCore.Filters": {
+              "target": "Package",
+              "version": "[7.0.9, )"
             }
           },
           "imports": [
