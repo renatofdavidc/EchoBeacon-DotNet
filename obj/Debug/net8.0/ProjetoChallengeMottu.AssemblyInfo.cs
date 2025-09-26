@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProjetoChallengeMottu")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a49d6db4bb95b1c3fb87a763d39ae1e0d3c2eeef")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+039022415ccf891ae95a656b89952baf94494a5c")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProjetoChallengeMottu")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProjetoChallengeMottu")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
