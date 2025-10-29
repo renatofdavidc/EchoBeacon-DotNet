@@ -1,217 +1,132 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using ProjetoChallengeMottu.DTOs;
 using ProjetoChallengeMottu.Filters;
 using ProjetoChallengeMottu.Interfaces;
 using ProjetoChallengeMottu.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ProjetoChallengeMottu.Controllers
 {
     [ApiController]
-    [Route("api/echobeacons")]
+    [Route("api/v{version:apiVersion}/echobeacons")]
+    [ApiVersion("1.0")]
     public class EchoBeaconsController : ControllerBase
     {
-        private readonly ILogger<EchoBeaconsController> _logger;
-        private readonly IEchoBeaconRepository _repository;
-        private readonly IMotoRepository _motoRepo;
+        private readonly IEchoBeaconRepository _echoBeaconRepository;
+        private readonly IFuncionarioRepository _funcionarioRepository;
 
         public EchoBeaconsController(
-            ILogger<EchoBeaconsController> logger,
-            IEchoBeaconRepository repository,
-            IMotoRepository motoRepo)
+            IEchoBeaconRepository echoBeaconRepository,
+            IFuncionarioRepository funcionarioRepository)
         {
-            _logger = logger;
-            _repository = repository;
-            _motoRepo = motoRepo;
+            _echoBeaconRepository = echoBeaconRepository;
+            _funcionarioRepository = funcionarioRepository;
         }
 
-        /// <summary>
-        /// Lista EchoBeacons com paginação e filtros.
-        /// </summary>
-    [HttpGet]
-    [ProducesResponseType(typeof(PagedResult<EchoBeaconResponse>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<PagedResult<EchoBeaconResponse>>> GetAll(
-            [FromQuery] EchoBeaconFilter filter,
-            [FromQuery] int page = 1,
-            [FromQuery] int size = 10)
+        [HttpGet]
+        [ProducesResponseType(typeof(PagedResult<EchoBeaconResponse>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<PagedResult<EchoBeaconResponse>>> GetAll([FromQuery] EchoBeaconFilter filter)
         {
-            page = page < 1 ? 1 : page;
-            size = size < 1 ? 10 : size;
-
-            var baseQuery = _repository
-                .QueryWithFilters(filter)
-                .Include(e => e.Moto);
-
-            var total = await baseQuery.CountAsync();
-            var beacons = await baseQuery
-                .OrderBy(b => b.Id)
-                .Skip((page - 1) * size)
-                .Take(size)
-                .ToListAsync();
-
-            var dtos = beacons.Select(e => new EchoBeaconResponse
+            var result = await _echoBeaconRepository.GetAllAsync(filter);
+            var items = result.Items.Select(e => new EchoBeaconResponse
             {
-                Id = e.Id,
-                NumeroIdentificacao = e.NumeroIdentificacao ?? string.Empty,
-                DataRegistro = e.DataRegistro,
-                Moto = e.Moto is null
-                       ? null
-                       : new MotoResponse
-                       {
-                           Id = e.Moto.Id,
-                           Placa = e.Moto.Placa ?? string.Empty,
-                           Modelo = e.Moto.Modelo ?? string.Empty,
-                           EchoBeacon = null
-                       }
+                IdEchoBeacon = e.IdEchoBeacon,
+                CodigoIdentificador = e.CodigoIdentificador,
+                StatusDispositivo = e.StatusDispositivo,
+                TipoSinal = e.TipoSinal,
+                RegistradaPor = e.RegistradaPor,
+                NomeFuncionario = e.Funcionario?.Nome
             }).ToList();
 
-            var result = new PagedResult<EchoBeaconResponse>
+            return Ok(new PagedResult<EchoBeaconResponse>
             {
-                Items = dtos,
-                Page = page,
-                Size = size,
-                TotalItems = total,
-                TotalPages = (int)Math.Ceiling(total / (double)size),
-                Links = BuildCollectionLinks(page, size)
-            };
-
-            return Ok(result);
+                Items = items,
+                Page = result.Page,
+                Size = result.Size,
+                TotalItems = result.TotalItems
+            });
         }
 
-        /// <summary>
-        /// Obtém uma EchoBeacon pelo Id.
-        /// </summary>
         [HttpGet("{id}")]
-        public async Task<ActionResult<EchoBeaconResponse>> GetById(long id)
+        [ProducesResponseType(typeof(EchoBeaconResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<EchoBeaconResponse>> GetById(int id)
         {
-            var e = await _repository
-                .QueryWithFilters(new EchoBeaconFilter())
-                .Include(x => x.Moto)
-                .FirstOrDefaultAsync(x => x.Id == id);
+            var e = await _echoBeaconRepository.GetByIdAsync(id);
+            if (e == null) return NotFound();
 
-            if (e == null)
-                return NotFound();
-
-            var dto = new EchoBeaconResponse
+            return Ok(new EchoBeaconResponse
             {
-                Id = e.Id,
-                NumeroIdentificacao = e.NumeroIdentificacao,
-                DataRegistro = e.DataRegistro,
-                Moto = e.Moto is null
-                       ? null
-                       : new MotoResponse
-                       {
-                           Id = e.Moto.Id,
-                           Placa = e.Moto.Placa,
-                           Modelo = e.Moto.Modelo,
-                           EchoBeacon = null
-                       }
-            };
-
-            return Ok(dto);
+                IdEchoBeacon = e.IdEchoBeacon,
+                CodigoIdentificador = e.CodigoIdentificador,
+                StatusDispositivo = e.StatusDispositivo,
+                TipoSinal = e.TipoSinal,
+                RegistradaPor = e.RegistradaPor,
+                NomeFuncionario = e.Funcionario?.Nome
+            });
         }
 
-    /// <summary>
-    /// Cria uma EchoBeacon.
-    /// Exemplo de payload:
-    /// {
-    ///   "numeroIdentificacao": "BEACON-01",
-    ///   "dataRegistro": "2025-09-25T12:00:00Z",
-    ///   "motoId": null
-    /// }
-    /// </summary>
-    [HttpPost]
-    [ProducesResponseType(typeof(EchoBeaconResponse), StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpPost]
+        [ProducesResponseType(typeof(EchoBeaconResponse), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([FromBody] EchoBeaconRequest request)
         {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var funcionarioExists = await _funcionarioRepository.ExistsAsync(request.RegistradaPor);
+            if (!funcionarioExists) return BadRequest("Funcionário não encontrado");
+
             var beacon = new EchoBeacon
             {
-                NumeroIdentificacao = request.NumeroIdentificacao,
-                DataRegistro = request.DataRegistro,
-                MotoId = request.MotoId
+                IdEchoBeacon = request.IdEchoBeacon,
+                CodigoIdentificador = request.CodigoIdentificador,
+                StatusDispositivo = request.StatusDispositivo,
+                TipoSinal = request.TipoSinal,
+                RegistradaPor = request.RegistradaPor
             };
-            await _repository.AddAsync(beacon);
-
-            var e = await _repository
-                .QueryWithFilters(new EchoBeaconFilter())
-                .Include(x => x.Moto)
-                .FirstOrDefaultAsync(x => x.Id == beacon.Id);
-
-            if (e == null)
-                return StatusCode(500, "Erro ao carregar a EchoBeacon recém-criada.");
+            var created = await _echoBeaconRepository.AddAsync(beacon);
 
             var dto = new EchoBeaconResponse
             {
-                Id = e.Id,
-                NumeroIdentificacao = e.NumeroIdentificacao ?? string.Empty,
-                DataRegistro = e.DataRegistro,
-                Moto = e.Moto is null
-                       ? null
-                       : new MotoResponse
-                       {
-                           Id = e.Moto.Id,
-                           Placa = e.Moto.Placa ?? string.Empty,
-                           Modelo = e.Moto.Modelo ?? string.Empty,
-                           EchoBeacon = null
-                       }
+                IdEchoBeacon = created.IdEchoBeacon,
+                CodigoIdentificador = created.CodigoIdentificador,
+                StatusDispositivo = created.StatusDispositivo,
+                TipoSinal = created.TipoSinal,
+                RegistradaPor = created.RegistradaPor
             };
 
-            return CreatedAtAction(nameof(GetById), new { id = dto.Id }, dto);
+            return CreatedAtAction(nameof(GetById), new { id = dto.IdEchoBeacon }, dto);
         }
 
-        /// <summary>
-        /// Atualiza uma EchoBeacon.
-        /// </summary>
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Update(
-            long id,
-            [FromBody] EchoBeaconRequest request)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Update(int id, [FromBody] EchoBeaconRequest request)
         {
-            var existing = await _repository.FindByIdAsync(id);
-            if (existing == null)
-                return NotFound();
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            existing.NumeroIdentificacao = request.NumeroIdentificacao;
-            existing.DataRegistro = request.DataRegistro;
-            existing.MotoId = request.MotoId;
-            await _repository.UpdateAsync(existing);
-
-            return NoContent();
-        }
-
-        /// <summary>
-    /// Remove uma EchoBeacon.
-        /// </summary>
-    [HttpDelete("{id}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete(long id)
-        {
-            var removed = await _repository.DeleteAsync(id);
-            if (!removed)
-                return NotFound();
-
-            return NoContent();
-        }
-
-        private IEnumerable<LinkDto> BuildCollectionLinks(int page, int size)
-        {
-            var links = new List<LinkDto>
+            var toUpdate = new EchoBeacon
             {
-                new LinkDto { Rel = "self", Href = Url.ActionLink(nameof(GetAll), values: new { page, size }) ?? string.Empty, Method = "GET" },
-                new LinkDto { Rel = "create", Href = Url.ActionLink(nameof(Create)) ?? string.Empty, Method = "POST" }
+                IdEchoBeacon = request.IdEchoBeacon,
+                CodigoIdentificador = request.CodigoIdentificador,
+                StatusDispositivo = request.StatusDispositivo,
+                TipoSinal = request.TipoSinal,
+                RegistradaPor = request.RegistradaPor
             };
-            if (page > 1)
-                links.Add(new LinkDto { Rel = "prev", Href = Url.ActionLink(nameof(GetAll), values: new { page = page - 1, size }) ?? string.Empty, Method = "GET" });
-            links.Add(new LinkDto { Rel = "next", Href = Url.ActionLink(nameof(GetAll), values: new { page = page + 1, size }) ?? string.Empty, Method = "GET" });
-            return links;
+
+            var updated = await _echoBeaconRepository.UpdateAsync(id, toUpdate);
+            if (updated == null) return NotFound();
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var removed = await _echoBeaconRepository.DeleteAsync(id);
+            if (!removed) return NotFound();
+            return NoContent();
         }
     }
 }

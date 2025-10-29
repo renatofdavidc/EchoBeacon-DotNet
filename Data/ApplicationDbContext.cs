@@ -11,9 +11,11 @@ namespace ProjetoChallengeMottu.Data
         {
         }
 
-        public DbSet<Moto> Motos { get; set; }
+        public DbSet<Funcionario> Funcionarios { get; set; }
         public DbSet<EchoBeacon> EchoBeacons { get; set; }
-    public DbSet<Localizacao> Localizacoes { get; set; }
+        public DbSet<Moto> Motos { get; set; }
+        public DbSet<LocalizacaoMoto> LocalizacoesMoto { get; set; }
+        public DbSet<AuditoriaMoto> AuditoriaMotos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,29 +23,56 @@ namespace ProjetoChallengeMottu.Data
 
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Moto>()
-                .HasOne(m => m.EchoBeacon)
-                .WithOne(e => e.Moto)
-                .HasForeignKey<EchoBeacon>(e => e.MotoId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.SetNull);
+            // Funcionario
+            modelBuilder.Entity<Funcionario>(entity =>
+            {
+                entity.HasKey(f => f.IdFuncionario);
+                entity.HasIndex(f => f.Email).IsUnique();
+            });
 
-            modelBuilder.Entity<EchoBeacon>()
-                .HasIndex(e => e.NumeroIdentificacao)
-                .IsUnique();
+            // EchoBeacon
+            modelBuilder.Entity<EchoBeacon>(entity =>
+            {
+                entity.HasKey(e => e.IdEchoBeacon);
+                entity.HasIndex(e => e.CodigoIdentificador).IsUnique();
 
-            modelBuilder.Entity<Localizacao>()
-                .HasOne(l => l.Moto)
-                .WithMany()
-                .HasForeignKey(l => l.MotoId)
-                .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(e => e.Funcionario)
+                    .WithMany(f => f.EchoBeacons)
+                    .HasForeignKey(e => e.RegistradaPor)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Localizacao>()
-                .HasOne(l => l.EchoBeacon)
-                .WithMany()
-                .HasForeignKey(l => l.EchoBeaconId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.SetNull);
+                entity.HasOne(e => e.Moto)
+                    .WithOne(m => m.EchoBeacon)
+                    .HasForeignKey<Moto>(m => m.IdEchoBeacon)
+                    .IsRequired(false)
+                    .OnDelete(DeleteBehavior.SetNull);
+            });
+
+            // Moto
+            modelBuilder.Entity<Moto>(entity =>
+            {
+                entity.HasKey(m => m.IdMoto);
+                entity.HasIndex(m => m.Placa).IsUnique();
+                entity.HasIndex(m => m.Chassi).IsUnique();
+                entity.HasIndex(m => m.IdEchoBeacon).IsUnique();
+            });
+
+            // LocalizacaoMoto
+            modelBuilder.Entity<LocalizacaoMoto>(entity =>
+            {
+                entity.HasKey(l => l.IdLocalizacao);
+
+                entity.HasOne(l => l.Moto)
+                    .WithMany(m => m.LocalizacoesMoto)
+                    .HasForeignKey(l => l.IdMoto)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // AuditoriaMoto (sem relacionamentos)
+            modelBuilder.Entity<AuditoriaMoto>(entity =>
+            {
+                entity.HasKey(a => a.IdAuditoria);
+            });
         }
     }
 }

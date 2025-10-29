@@ -1,25 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\r.campiteli\\Documents\\projetos\\fiap\\EchoBeacon-DotNet\\ProjetoChallengeMottu.csproj": {}
+    "C:\\Users\\labsfiap\\Desktop\\CHELLANGE\\ProjetoChallengeMottu.csproj": {}
   },
   "projects": {
-    "C:\\Users\\r.campiteli\\Documents\\projetos\\fiap\\EchoBeacon-DotNet\\ProjetoChallengeMottu.csproj": {
+    "C:\\Users\\labsfiap\\Desktop\\CHELLANGE\\ProjetoChallengeMottu.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\r.campiteli\\Documents\\projetos\\fiap\\EchoBeacon-DotNet\\ProjetoChallengeMottu.csproj",
+        "projectUniqueName": "C:\\Users\\labsfiap\\Desktop\\CHELLANGE\\ProjetoChallengeMottu.csproj",
         "projectName": "ProjetoChallengeMottu",
-        "projectPath": "C:\\Users\\r.campiteli\\Documents\\projetos\\fiap\\EchoBeacon-DotNet\\ProjetoChallengeMottu.csproj",
-        "packagesPath": "C:\\Users\\r.campiteli\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\r.campiteli\\Documents\\projetos\\fiap\\EchoBeacon-DotNet\\obj\\",
+        "projectPath": "C:\\Users\\labsfiap\\Desktop\\CHELLANGE\\ProjetoChallengeMottu.csproj",
+        "packagesPath": "C:\\Users\\labsfiap\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\labsfiap\\Desktop\\CHELLANGE\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\r.campiteli\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\labsfiap\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -37,12 +44,21 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Mvc.Versioning": {
+              "target": "Package",
+              "version": "[5.1.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer": {
+              "target": "Package",
+              "version": "[5.1.0, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[9.0.5, )"
@@ -58,6 +74,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[9.0.5, )"
+            },
+            "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "Oracle.EntityFrameworkCore": {
               "target": "Package",
@@ -91,7 +111,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.414/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
