@@ -24,7 +24,7 @@ Edite `appsettings.json`:
 ```
 {
   "ConnectionStrings": {
-    "DefaultConnection": "User Id=SEU_USUARIO;Password=SUA_SENHA;Data Source=SEU_HOST/SEU_SERVICE_NAME;"
+    "DefaultConnection": "User Id=SEU_USUARIO;Password=SUA_SENHA;Data Source=SEU_HOST/SEU_SERVICE_NAME;"  
   },
   "ApiKey": "EchoBeacon2025SecureKey!@#"
 }
@@ -99,8 +99,20 @@ Observações:
   Content-Type: application/json
 
   { "patioAreaM2": 1500, "motosNoPatio": 60, "percentualComBeacon": 0.8, "funcionariosBuscando": 2, "horaPico": 0 }
-  ```
+  ``
 ```
+
+## Testes
+
+- Os testes ficam em `ProjetoChallengeMottu.Tests` (xUnit), cobrindo repositórios (EF InMemory) e integração (middleware de API Key e endpoints de ML).
+- Para executar:
+  - Windows PowerShell:
+    - `dotnet test .\ProjetoChallengeMottu.Tests\ProjetoChallengeMottu.Tests.csproj`
+  - Dica: se ocorrer erro de cópia/lock de arquivo no Windows, rode `dotnet clean` na solução e tente novamente.
+- Observações:
+  - Os testes de integração usam uma fábrica customizada (`CustomWebApplicationFactory`) que sobrescreve o `ApiKey` para `TestKey123!` em memória.
+  - Portanto, não é necessário alterar `appsettings.json` para os testes.
+  - Banco de dados Oracle não é necessário para os testes de ML e boa parte dos testes de repositório (usam EF InMemory).
 
 ## Comandos úteis
 

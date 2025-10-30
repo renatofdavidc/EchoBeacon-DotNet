@@ -27,6 +27,24 @@
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="8.0.0" />
   </ItemGroup>
 
+  <!-- Excluir pasta de testes da compilação deste projeto Web -->
+  <ItemGroup>
+    <Compile Remove="ProjetoChallengeMottu.Tests/**" />
+    <None Remove="ProjetoChallengeMottu.Tests/**" />
+    <Content Remove="ProjetoChallengeMottu.Tests/**" />
+    <EmbeddedResource Remove="ProjetoChallengeMottu.Tests/**" />
+  </ItemGroup>
+
+  <!-- Evitar incluir artefatos de build (bin/obj) como conteúdo -->
+  <ItemGroup>
+    <None Remove="**/bin/**" />
+    <None Remove="**/obj/**" />
+    <Content Remove="**/bin/**" />
+    <Content Remove="**/obj/**" />
+    <EmbeddedResource Remove="**/bin/**" />
+    <EmbeddedResource Remove="**/obj/**" />
+  </ItemGroup>
+
     <!-- Excluir arquivos legados de entrega (removidos logicamente) -->
     <ItemGroup>
       <Compile Remove="Services/DeliveryTimeModel.cs" />
