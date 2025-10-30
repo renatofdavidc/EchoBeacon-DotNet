@@ -4,3 +4,38 @@ GET {{ProjetoChallengeMottu_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+###
+
+# Predict yard search time (requires API Key)
+POST {{ProjetoChallengeMottu_HostAddress}}/api/v1/ml/predict-search-time
+X-Api-Key: EchoBeacon2025SecureKey!@#
+Content-Type: application/json
+
+{
+	"patioAreaM2": 1500,
+	"motosNoPatio": 60,
+	"percentualComBeacon": 0.8,
+	"funcionariosBuscando": 2,
+	"horaPico": 0
+}
+
+###
+
+# Predict monthly savings (requires API Key)
+POST {{ProjetoChallengeMottu_HostAddress}}/api/v1/ml/predict-savings
+X-Api-Key: EchoBeacon2025SecureKey!@#
+Content-Type: application/json
+
+{
+	"patioAreaM2": 1500,
+	"motosNoPatio": 60,
+	"percentualComBeacon": 0.8,
+	"funcionariosBuscando": 2,
+	"horaPico": 1,
+	"baselineTimePerSearchMin": 12,
+	"searchesPerDay": 25,
+	"hourlyCostBRL": 45
+}
+
+###

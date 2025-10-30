@@ -6,6 +6,7 @@ using ProjetoChallengeMottu.Data;
 using ProjetoChallengeMottu.Interfaces;
 using ProjetoChallengeMottu.Repositories;
 using ProjetoChallengeMottu.Middleware;
+using ProjetoChallengeMottu.Services;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,9 @@ builder.Services.AddScoped<IEchoBeaconRepository, EchoBeaconRepository>();
 builder.Services.AddScoped<IMotoRepository, MotoRepository>();
 builder.Services.AddScoped<ILocalizacaoMotoRepository, LocalizacaoMotoRepository>();
 builder.Services.AddScoped<IAuditoriaMotoRepository, AuditoriaMotoRepository>();
+
+// Serviço de ML.NET (treinado uma vez em memória)
+builder.Services.AddSingleton<PatioSearchTimeModel>();
 
 // Configuração do DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
